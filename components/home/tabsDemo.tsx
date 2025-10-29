@@ -15,7 +15,6 @@ import { use, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 
 export function TabsDemo() {
-  const [iTTI, setITTI] = useState("");
   const [prompt, setPrompt] = useState("");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);

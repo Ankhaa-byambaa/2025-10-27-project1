@@ -1,7 +1,6 @@
 import { InferenceClient } from "@huggingface/inference";
 import { NextRequest, NextResponse } from "next/server";
-const client = new InferenceClient();
-const hf = new InferenceClient(process.env.TOKEN || "");
+const hf = new InferenceClient(process.env.TOKEN);
 export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
