@@ -24,7 +24,7 @@ export function TabsDemo() {
     setImage("");
 
     try {
-      const response = await fetch("/api/generate-image/", {
+      const response = await fetch("/api/generate-image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +46,7 @@ export function TabsDemo() {
       setLoading(false);
     }
   };
+
   return (
     <>
       <Tabs defaultValue="account" className="mt-20  mx-20">
@@ -83,7 +84,7 @@ export function TabsDemo() {
               <div className="h-40 flex flex-col border-dashed  gap-3 justify-center items-center border-gray-500 border-2 rounded-md ">
                 <img className="w-10  " src={"upload icon.jpeg"} />
                 <p className="text-[12px]">
-                  Drag and drop an image here, to click to select{" "}
+                  Drag and drop an image here, to click to select
                 </p>
               </div>
             </CardContent>
@@ -93,6 +94,7 @@ export function TabsDemo() {
               </CardDescription>
             </CardFooter>
           </Card>
+          {loading ? <img src={`${image}`} /> : <></>}
         </TabsContent>
       </Tabs>
     </>
