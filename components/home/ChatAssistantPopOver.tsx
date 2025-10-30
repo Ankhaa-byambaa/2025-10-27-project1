@@ -6,32 +6,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
-
+import { Input } from "../ui/input";
 export function ChatAssisantPopOver() {
-  const [clientMessage, setClientMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const chat = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch("app/api/gemini", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ clientMessage }),
-      });
-      const data = await response.json();
-      if (!data.text) {
-        setLoading(false);
-      } else {
-        alert("Failed to generate text");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to generate chat");
-    } finally {
-      setLoading(false);
+  const [input, setInput] = useState<string>("");
+  const [response, setResponse] = useState<string>("");
+
+  const onSendChat = async () => {
+    const response = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ chat: input }),
+    });
+    const data = await response.json();
+    console.log(data.message);
+    if (data) {
+      setResponse(data.message);
     }
   };
 
@@ -45,21 +36,19 @@ export function ChatAssisantPopOver() {
           @
         </Button>
       </PopoverTrigger>
-      <form onSubmit={chat}>
+      <form>
         <PopoverContent className="h-100">
           <div>
             <div className="flex gap-5">
-              <input
-                value={clientMessage}
-                placeholder=" type your message"
-                className="w-full h-10 "
-                onChange={(e) => setClientMessage(e.target.value)}
-              />
-              <button className="w-10 h-10 bg-black text-white text-5 flex justify-center items-center rounded-md">
-                ⌲
+              <Input onChange={(e) => setInput(e.target.value)} value={input} />
+              <button
+                onClick={onSendChat}
+                className="w-10 h-10 bg-black text-white text-5 flex justify-center items-center rounded-md"
+              >
+                {`>`}
               </button>
             </div>
-            {loading ? <p>{clientMessage}</p> : <></>}
+            {response && <p>{response}</p>}
           </div>
         </PopoverContent>
       </form>

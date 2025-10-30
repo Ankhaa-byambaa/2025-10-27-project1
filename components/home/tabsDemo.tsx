@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,31 +8,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { use, useState } from "react";
+import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 
 export function TabsDemo() {
   const [prompt, setPrompt] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<String>("");
   const [loading, setLoading] = useState(false);
   const generateImage = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setImage("");
-
     try {
-      const response = await fetch("/api/generate-image", {
+      const response = await fetch("/api/generate-image/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
-
       const data = await response.json();
-
       if (data.image) {
         setImage(data.image);
       } else {
@@ -82,6 +77,7 @@ export function TabsDemo() {
             </CardHeader>
             <CardContent className="grid gap-6">
               <div className="h-40 flex flex-col border-dashed  gap-3 justify-center items-center border-gray-500 border-2 rounded-md ">
+                <input type="file" className=" inset-0 opacity-0 " />
                 <img className="w-10  " src={"upload icon.jpeg"} />
                 <p className="text-[12px]">
                   Drag and drop an image here, to click to select

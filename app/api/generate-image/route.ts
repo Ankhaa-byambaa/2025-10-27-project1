@@ -1,21 +1,26 @@
 import { InferenceClient } from "@huggingface/inference";
 import { NextRequest, NextResponse } from "next/server";
-const hf = new InferenceClient(process.env.TOKEN);
+const hf = new InferenceClient(process.env.HF_TOKEN || "");
+
 export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
+
     if (!prompt) {
       return NextResponse.json(
         { error: "Prompt is required" },
         { status: 400 }
       );
     }
+
     const image = (await hf.textToImage({
       model: "black-forest-labs/FLUX.1-dev",
-      inputs: prompt,
+      inputs: `${prompt} and always black-and-white old styled`,
     })) as unknown as Blob;
+
     const buffer = await image.arrayBuffer();
     const base64 = Buffer.from(buffer).toString("base64");
+
     return NextResponse.json({
       image: `data:image/png;base64,${base64}`,
     });
@@ -27,3 +32,10 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+// import { GoogleGenAI } from "@google/genai";
+// import * as fs from "node:fs";
+// import { NextRequest, NextResponse } from "next/server";
+// export async function POST(req: NextRequest) {
+//   return NextResponse.json({});
+// }
