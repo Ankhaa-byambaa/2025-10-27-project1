@@ -1,13 +1,13 @@
-import { ChatAssisantPopOver } from "@/components/home/ChatAssistantPopOver";
-import { TabsDemo } from "@/components/home/TabsDemo";
+import { Popover } from "@radix-ui/react-popover";
+import { Tabs } from "@radix-ui/react-tabs";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <>
       <div>
-        <TabsDemo />
-        <ChatAssisantPopOver />
+        <Tabs />
+        <Popover />
       </div>
     </>
   );

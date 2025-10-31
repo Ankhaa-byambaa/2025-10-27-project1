@@ -78,7 +78,7 @@ export function TabsDemo() {
             <CardContent className="grid gap-6">
               <div className="h-40 flex flex-col border-dashed  gap-3 justify-center items-center border-gray-500 border-2 rounded-md ">
                 <input type="file" className=" inset-0 opacity-0 " />
-                <img className="w-10  " src={"upload icon.jpeg"} />
+                <img className="w-10" src={"upload icon.jpeg"} />
                 <p className="text-[12px]">
                   Drag and drop an image here, to click to select
                 </p>
